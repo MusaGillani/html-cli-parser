@@ -46,12 +46,17 @@ async function main() {
       // Skip this element and find its sibling's second <span>
       const secondSpanContent =
         `\n---- \n${i + 1}\n` +
-        $element.find("div:first-child").next("div").find("span:eq(1)").text() +
+        $element
+          .find("div:first-child")
+          .next("div")
+          .find("span:eq(1)")
+          .text()
+          .trim() +
         `\n`;
       allText.push(secondSpanContent);
     } else {
       const secondSpanContent =
-        `\n---- \n${i + 1}\n` + $element.find("span:eq(1)").text();
+        `\n---- \n${i + 1}\n` + $element.find("span:eq(1)").text().trim();
       `\n`;
 
       allText.push(secondSpanContent);
