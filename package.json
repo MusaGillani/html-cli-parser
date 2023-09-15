@@ -1,0 +1,25 @@
+{
+  "name": "html-cli-parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "type": "module",
+  "repository": {
+    "url": "https://github.com/MusaGillani/html-cli-parser.git"
+  },
+  "scripts": {
+    "start": "tsx index.ts",
+    "dev": "tsx watch index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.6.1",
+    "tsx": "^3.12.10"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "prettier": "^3.0.3"
+  }
+}
