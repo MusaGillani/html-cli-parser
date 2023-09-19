@@ -3,10 +3,12 @@ import * as cheerio from "cheerio";
 import * as fs from "fs";
 import * as prettier from "prettier";
 import * as path from "path";
+import { NodeHtmlMarkdown, NodeHtmlMarkdownOptions } from "node-html-markdown";
 
 const OUTDIR = "out";
 const TEXTOUTPATH = path.join(OUTDIR, "output.txt");
 const HTMLOUTPATH = path.join(OUTDIR, "output.html");
+const MDOUTPATH = path.join(OUTDIR, "output.md");
 
 const formatHtml = async (html: string) => {
   return await prettier.format(html, {
@@ -69,14 +71,23 @@ async function main() {
     fs.mkdirSync(OUTDIR, { recursive: true });
   }
   const outputFormatted = await formatHtml(allHtml.join(""));
+  const markdown = NodeHtmlMarkdown.translate(
+    /* html */ outputFormatted,
+    /* options (optional) */ {},
+    /* customTranslators (optional) */ undefined,
+    /* customCodeBlockTranslators (optional) */ undefined
+  );
   fs.writeFile(HTMLOUTPATH, outputFormatted, (err) => {
     if (err) console.error("error writing to " + HTMLOUTPATH);
+  });
+  fs.writeFile(MDOUTPATH, markdown, (err) => {
+    if (err) console.error("error writing to " + MDOUTPATH);
   });
   fs.writeFile(TEXTOUTPATH, allText.join(""), (err) => {
     if (err) console.error("error writing to " + TEXTOUTPATH);
   });
 
-  console.info("Check " + TEXTOUTPATH + " for result");
+  console.info("Check " + MDOUTPATH + " for result");
   // console.log("all html", allHtml.join("\n----\n"));
   // console.log("formatted output", outputFormatted);
   // console.log("selected.lenght", $selected.length);
